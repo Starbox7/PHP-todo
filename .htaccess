@@ -13,3 +13,6 @@ RewriteCond %{REQUEST_FILENAME} !-d
  
 # Push every request to index.php
 RewriteRule ^(.*)$ index.php [QSA]
+
+php_value error_reporting 6135
+php_flag display_errors on

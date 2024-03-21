@@ -1,14 +1,22 @@
 <?php
-// PostgreSQL 데이터베이스 연결 문자열
-$connectionString = "host=localhost port=5432 dbname=php user=starbox7 password=starbox7";
+error_reporting( E_ALL );
+ini_set( "display_errors", 1 );
 
-// 데이터베이스 연결 시도
-$dbconn = pg_connect($connectionString);
+class DB {
+    private $host = 'localhost';
+    private $dbName = 'php';
+    private $user = 'starbox7';
+    private $password = 'starbox7';
+    public $db;
 
-// 연결 성공 여부 확인
-if ($dbconn) {
-    echo "데이터베이스에 성공적으로 연결되었습니다.";
-} else {
-    echo "데이터베이스 연결에 실패했습니다.";
+    public function __construct() {
+        try {
+            $this->db = new PDO("pgsql:host=$this->host;dbname=$this->dbName", $this->user, $this->password, [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ]);
+        } catch (PDOException $e) {
+            die("데이터베이스 연결 실패: " . $e->getMessage());
+        }
+    }
 }
 ?>
